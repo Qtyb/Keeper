@@ -5,7 +5,6 @@ stages:
     - test
 
 before_script:
-    - "cd src"
     - "dotnet restore"
 
 build:
@@ -16,5 +15,4 @@ build:
 test:
     stage: test
     script: 
-        - "cd .."
         - "dotnet test"
