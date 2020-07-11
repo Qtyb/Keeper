@@ -1,4 +1,4 @@
-# Things keeper
+# Keeper
 Application stores users project and assigns them to locations
 This is my bachelor project. 
 
