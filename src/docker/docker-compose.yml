@@ -1,0 +1,8 @@
+version: '3'
+services: 
+    inventory:
+        build: ../Inventory
+        container_name: inventory
+        ports:
+            - 7000:80
+            - 7001:443
