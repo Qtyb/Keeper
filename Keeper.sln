@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Repository", "src\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.EventBus.Interfaces", "src\Common\Common.EventBus.Interfaces\Common.EventBus.Interfaces.csproj", "{60F91C40-4C9A-4F4F-BB55-D386C9DB3A92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Logging", "src\Common\Common.Logging\Common.Logging.csproj", "{A7718785-6A7E-4F88-8441-6968ABBE454A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Logging", "src\Common\Common.Logging\Common.Logging.csproj", "{A7718785-6A7E-4F88-8441-6968ABBE454A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
