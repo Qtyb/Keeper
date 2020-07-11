@@ -5,6 +5,7 @@ This is my bachelor project.
 ## Services
 | Service       | Port          |
 | ------------- |:-------------:|
+| Inventory     | 7000,7001     |
 | Db            | 1433          |
 | RabbitMq      | 5672          |
 | RabbitMqGui   | 15672         |
