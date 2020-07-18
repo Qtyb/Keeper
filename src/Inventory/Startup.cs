@@ -1,4 +1,5 @@
 using Common.Framework.Extensions;
+using Common.Logging.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,8 +34,14 @@ namespace Inventory
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseCommonExceptionHandler();
+            }
 
             //app.UseHttpsRedirection();
+
+            app.UseCommonRequestLogging();
 
             app.UseRouting();
             app.UseAuthorization();
