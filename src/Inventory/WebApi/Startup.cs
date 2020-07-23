@@ -1,6 +1,10 @@
 using Common.Framework.Extensions;
 using Common.Logging.Extensions;
+using Common.Repository.Extensions;
 using Inventory.Data;
+using Inventory.Data.Extensions;
+using Inventory.Repositories.Extensions;
+using Inventory.Services.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +32,10 @@ namespace Inventory
             services.AddDbContext<InventoryContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("InventoryContext")));
 
+            services.ConfigureInventoryData();
+            services.ConfigureCommonRepositories();
+            services.ConfigureInventoryRepositories();
+            services.ConfigureInventoryServices();
             services.ConfigureCommonSwagger(nameof(Inventory), _version);
         }
 
