@@ -5,7 +5,7 @@ namespace Common.Repository.Extensions
 {
     public static class RepositoryExtensions
     {
-        public static void ConfigureRepositories(this IServiceCollection services)
+        public static void ConfigureCommonRepositories(this IServiceCollection services)
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
