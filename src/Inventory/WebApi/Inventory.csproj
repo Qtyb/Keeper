@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Inventory.Data\Inventory.Data.csproj" />
-    <ProjectReference Include="..\Common\Common.Framework\Common.Framework.csproj" />
-    <ProjectReference Include="..\Common\Common.Logging\Common.Logging.csproj" />
-    <ProjectReference Include="..\Common\Common.Repository\Common.Repository.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Framework\Common.Framework.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Logging\Common.Logging.csproj" />
+    <ProjectReference Include="..\Data\Inventory.Data\Inventory.Data.csproj" />
   </ItemGroup>
+
 
 
 </Project>
