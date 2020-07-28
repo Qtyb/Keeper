@@ -6,6 +6,8 @@
 docker/data/jenkins
 docker/data/rabbitmq
 
+output.txt
+
 # User-specific files
 *.rsuser
 *.suo
