@@ -24,10 +24,8 @@
 //        [MaxLength(3)]
 //        public string Code { get; set; }
 
-//        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-//        public DateTimeOffset CreatedOn { get; set; } = DateTime.Now;
+//        public DateTimeOffset CreatedOn { get; set; }
 
-//        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 //        public DateTimeOffset? UpdatedOn { get; set; }
 
 //        public ICollection<Location> Locations { get; set; }

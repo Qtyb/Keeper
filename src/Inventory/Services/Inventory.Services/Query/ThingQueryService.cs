@@ -39,7 +39,7 @@ namespace Inventory.Services.Query
             _logger.LogInformation("{class}.{method} with id = [{id}] Invoked", nameof(ThingQueryService), nameof(GetThings), id);
             var thing = await _thingRepository.GetById(id);
 
-            if (thing is null)
+            if (thing is null || thing.Deleted)
                 throw new EntityNotFoundException<Thing>($"Id = [{id}]");
 
             return _thingMappingService.Map(thing);

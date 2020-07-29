@@ -28,10 +28,8 @@ namespace Inventory.Data.Entities
         [MaxLength(20)]
         public string City { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTimeOffset CreatedOn { get; set; } = DateTime.Now;
+        public DateTimeOffset CreatedOn { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTimeOffset? UpdatedOn { get; set; }
 
         public int? ParentLocationId { get; set; }

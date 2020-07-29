@@ -1,4 +1,5 @@
-﻿using Common.Repository.Interfaces;
+﻿using Common.Data.Exceptions;
+using Common.Repository.Interfaces;
 using Inventory.Data.Entities;
 using Inventory.Models.Dtos.Request.Thing;
 using Inventory.Repositories.Repositories.Intefaces;
@@ -36,9 +37,23 @@ namespace Inventory.Services.Query
             _thingRepository.Add(thing);
             await _unitOfWork.Commit();
 
-            _logger.LogInformation("{entityName} has been successfully created", nameof(Thing));
+            _logger.LogInformation("{entityName} with id = [{id}] has been successfully created", nameof(Thing), thing.Id);
 
             return thing.Id;
+        }
+
+        public async Task DeleteThing(int id)
+        {
+            _logger.LogInformation("{class}.{method} with id = [{id}] Invoked", nameof(ThingCommandService), nameof(DeleteThing), id);
+
+            var thing = await _thingRepository.GetById(id);
+            if (thing is null || thing.Deleted)
+                throw new EntityNotFoundException<Thing>($"Id = [{id}]");
+
+            thing.Deleted = true;
+            await _unitOfWork.Commit();
+
+            _logger.LogInformation("{entityName} with id = [{id}] has been successfully deleted", nameof(Thing), thing.Id);
         }
     }
 }
