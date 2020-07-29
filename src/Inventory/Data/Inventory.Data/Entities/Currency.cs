@@ -21,10 +21,6 @@ namespace Inventory.Data.Entities
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(200)]
-        public string Description { get; set; }
-
-        [Required]
         [MaxLength(3)]
         public string Code { get; set; }
 

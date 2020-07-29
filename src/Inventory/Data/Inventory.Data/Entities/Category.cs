@@ -18,7 +18,7 @@ namespace Inventory.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(40)]
         public string Name { get; set; }
 
         [MaxLength(500)]
