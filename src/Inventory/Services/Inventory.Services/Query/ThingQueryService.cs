@@ -1,4 +1,6 @@
-﻿using Inventory.Models.Dtos.Response;
+﻿using Common.Data.Exceptions;
+using Inventory.Data.Entities;
+using Inventory.Models.Dtos.Response;
 using Inventory.Repositories.Query.Intefaces;
 using Inventory.Services.Mappings.Interfaces;
 using Inventory.Services.Query.Interfaces;
@@ -28,14 +30,23 @@ namespace Inventory.Services.Query
             _logger = logger;
         }
 
+
         public async Task<IEnumerable<ThingListDto>> GetThings()
         {
+            _logger.LogInformation("{class}.{method} Invoked", nameof(ThingQueryService), nameof(GetThings));
             var things = await _thingQueryRepository.GetAll();
 
-            var result = new List<ThingListDto>();
-            things.ToList().ForEach(t => result.Add(_thingMappingService.Map(t)));
+            return _thingMappingService.Map(things);
+        }
+        public async Task<ThingDto> GetThing(int id)
+        {
+            _logger.LogInformation("{class}.{method} with id = [{id}] Invoked", nameof(ThingQueryService), nameof(GetThings), id);
+            var thing = await _thingQueryRepository.GetById(id);
 
-            return result;
+            if (thing is null)
+                throw new EntityNotFoundException<Thing>($"Id = [{id}]");
+
+            return _thingMappingService.Map(thing);
         }
     }
 }

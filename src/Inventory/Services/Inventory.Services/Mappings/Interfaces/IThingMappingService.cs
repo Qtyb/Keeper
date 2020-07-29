@@ -1,10 +1,12 @@
 ﻿using Inventory.Data.Entities;
 using Inventory.Models.Dtos.Response;
+using System.Collections.Generic;
 
 namespace Inventory.Services.Mappings.Interfaces
 {
     public interface IThingMappingService
     {
-        ThingListDto Map(Thing thing);
+        IEnumerable<ThingListDto> Map(IEnumerable<Thing> thing);
+        ThingDto Map(Thing thing);
     }
 }

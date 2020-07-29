@@ -2,7 +2,7 @@
 
 namespace Common.Data.Interfaces
 {
-    public interface IGuidEntity
+    public interface IGuidEntity : IEntity
     {
         Guid Guid { get; set; }
     }

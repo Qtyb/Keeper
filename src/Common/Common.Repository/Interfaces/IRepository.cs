@@ -10,7 +10,7 @@ namespace Common.Repository.Interfaces
     {
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
 
-        Task<T> GetById(long id);
+        Task<T> GetById(int id);
 
         Task<IEnumerable<T>> GetAll();
 
