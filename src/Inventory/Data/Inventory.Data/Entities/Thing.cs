@@ -17,7 +17,6 @@ namespace Inventory.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Guid { get; set; }
 
         [Required]
@@ -31,7 +30,7 @@ namespace Inventory.Data.Entities
         public decimal? Value { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTimeOffset CreatedOn { get; set; } = DateTime.UtcNow;
+        public DateTimeOffset CreatedOn { get; set; } = DateTime.Now;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTimeOffset? UpdatedOn { get; set; }
@@ -45,7 +44,7 @@ namespace Inventory.Data.Entities
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public User User { get; set; }
 
         public ICollection<ThingLocation> ThingLocations { get; set; }
