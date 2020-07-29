@@ -30,6 +30,10 @@ You can apply migrations for one service going to service solution directory and
 dotnet ef database update
 ```
 
+### Database seeds
+Seeds are located in `sql\<service_name>` folder.
+To apply them run `seed.ps1` per each service.
+
 ## RabbitMq
 Each microservice will have his own queue, which it will listen on.
 All microservices will use the same direct exchange to send messages.
