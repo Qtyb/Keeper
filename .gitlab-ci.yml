@@ -4,9 +4,6 @@ stages:
     - build
     - test
 
-before_script:
-    - "dotnet restore"
-
 build:
     stage: build
     script:
