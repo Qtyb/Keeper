@@ -29,10 +29,10 @@ namespace Inventory.Data.Entities
         [Column(TypeName = "decimal(18,4)")]
         public decimal? Value { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTimeOffset CreatedOn { get; set; } = DateTime.Now;
+        public bool Deleted { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTimeOffset CreatedOn { get; set; }
+
         public DateTimeOffset? UpdatedOn { get; set; }
 
         public int? CurrencyId { get; set; }

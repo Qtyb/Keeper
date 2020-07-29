@@ -27,10 +27,8 @@ namespace Inventory.Data.Entities
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTimeOffset CreatedOn { get; set; } = DateTime.Now;
+        public DateTimeOffset CreatedOn { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTimeOffset? UpdatedOn { get; set; }
 
         public int ThingId { get; set; }

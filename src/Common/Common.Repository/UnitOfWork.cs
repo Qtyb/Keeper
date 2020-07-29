@@ -20,17 +20,26 @@ namespace Common.Repository
 
         public async Task Commit()
         {
-            HandleNewEntities();
+            var entityEntries = _dbContext.ChangeTracker.Entries();
+            HandleNewEntities(entityEntries);
+            HandleModifiedEntities(entityEntries);
 
             await _dbContext.SaveChangesAsync();
         }
 
-        private void HandleNewEntities()
+        private void HandleNewEntities(IEnumerable<EntityEntry> entityEntries)
         {
-            var newEntityEntries = _dbContext.ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added);
+            var newEntityEntries = entityEntries.Where(e => e.State == EntityState.Added);
 
             AddNewGuidToEntities(newEntityEntries);
+            AddCreatedTimeToEntities(newEntityEntries);
+        }
+
+        private void HandleModifiedEntities(IEnumerable<EntityEntry> entityEntries)
+        {
+            var modifiedEntityEntries = entityEntries.Where(e => e.State == EntityState.Modified);
+
+            UpdateTimeOnEntities(modifiedEntityEntries);
         }
 
         private void AddNewGuidToEntities(IEnumerable<EntityEntry> entityEntries)
@@ -40,6 +49,28 @@ namespace Common.Repository
                 if (entityEntry.Entity is IGuidEntity guidEntity)
                 {
                     guidEntity.Guid = Guid.NewGuid();
+                }
+            }
+        }
+
+        private void AddCreatedTimeToEntities(IEnumerable<EntityEntry> entityEntries)
+        {
+            foreach (var entityEntry in entityEntries)
+            {
+                if (entityEntry.Entity is IDateTimeEntity dateTimeEntity)
+                {
+                    dateTimeEntity.CreatedOn = DateTime.Now;
+                }
+            }
+        }
+
+        private void UpdateTimeOnEntities(IEnumerable<EntityEntry> entityEntries)
+        {
+            foreach (var entityEntry in entityEntries)
+            {
+                if (entityEntry.Entity is IDateTimeEntity dateTimeEntity)
+                {
+                    dateTimeEntity.UpdatedOn = DateTime.Now;
                 }
             }
         }

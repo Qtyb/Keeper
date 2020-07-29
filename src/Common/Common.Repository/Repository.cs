@@ -12,32 +12,35 @@ namespace Common.Repository
     {
         private readonly DbContext _dbContext;
 
+        protected DbSet<T> DbSet;
+
         public Repository(DbContext dbContext)
         {
             _dbContext = dbContext;
+            DbSet = _dbContext.Set<T>();
         }
 
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
-            return _dbContext.Set<T>().Where(expression);
+            return DbSet.Where(expression);
         }
 
-        public async Task<T> GetById(int id)
+        public virtual async Task<T> GetById(int id)
         {
-            return await _dbContext.Set<T>().FindAsync(id);
+            return await DbSet.FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAll()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return await DbSet.ToListAsync();
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             _dbContext.Remove(entity);
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             _dbContext.Add(entity);
         }

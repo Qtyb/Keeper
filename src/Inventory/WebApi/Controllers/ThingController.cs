@@ -54,10 +54,11 @@ namespace Inventory.Controllers
         {
         }
 
-        // DELETE: api/things/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            await _thingCommandService.DeleteThing(id);
+            return NoContent();
         }
     }
 }

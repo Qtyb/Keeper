@@ -24,10 +24,8 @@ namespace Inventory.Data.Entities
         [MaxLength(3)]
         public string Code { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTimeOffset CreatedOn { get; set; } = DateTime.Now;
+        public DateTimeOffset CreatedOn { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTimeOffset? UpdatedOn { get; set; }
 
         public ICollection<Thing> Things { get; set; }
