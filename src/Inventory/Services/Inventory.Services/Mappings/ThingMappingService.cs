@@ -1,4 +1,5 @@
 ﻿using Inventory.Data.Entities;
+using Inventory.Models.Dtos.Request.Thing;
 using Inventory.Models.Dtos.Response;
 using Inventory.Services.Mappings.Interfaces;
 using System;
@@ -34,6 +35,18 @@ namespace Inventory.Services.Mappings
                 CurrencyCode = thingElement.Currency?.Code,
                 CategoryName = thingElement.Category?.Name
             }).ToList();
+        }
+
+        public Thing Map(CreateThingDto createThingDto)
+        {
+            return new Thing()
+            {
+                Name = createThingDto.Name,
+                Description = createThingDto.Description,
+                Value = createThingDto.Value,
+                CurrencyId = createThingDto.CurrencyId,
+                CategoryId = createThingDto.CategoryId
+            };
         }
     }
 }
