@@ -1,8 +1,4 @@
-﻿using Inventory.Services.Mappings;
-using Inventory.Services.Mappings.Interfaces;
-using Inventory.Services.Query;
-using Inventory.Services.Query.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Inventory.Services.Extensions
 {
@@ -10,8 +6,11 @@ namespace Inventory.Services.Extensions
     {
         public static void ConfigureInventoryServices(this IServiceCollection services)
         {
-            services.AddTransient<IThingMappingService, ThingMappingService>();
-            services.AddTransient<IThingQueryService, ThingQueryService>();
+            services.Scan(scan => scan
+              .FromCallingAssembly()
+                .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service")))
+                .AsImplementedInterfaces()
+                .WithTransientLifetime());
         }
     }
 }
