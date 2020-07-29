@@ -26,19 +26,17 @@ namespace Inventory.Controllers
             _logger = logger;
         }
 
-        // GET: api/things
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ThingListDto>>> GetThings()
         {
             return Ok(await _thingQueryService.GetThings());
         }
 
-        //// GET: api/things/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public ActionResult<Thing> Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<ActionResult<ThingDto>> Get(int id)
+        {
+            return Ok(await _thingQueryService.GetThing(id));
+        }
 
         // POST: api/things
         [HttpPost]

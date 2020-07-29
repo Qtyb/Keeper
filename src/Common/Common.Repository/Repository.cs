@@ -22,7 +22,7 @@ namespace Common.Repository
             return _dbContext.Set<T>().Where(expression);
         }
 
-        public async Task<T> GetById(long id)
+        public async Task<T> GetById(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
