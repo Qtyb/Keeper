@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Inventory.Data.Entities;
-using Inventory.Models.Dtos.Request.Thing;
+﻿using Inventory.Models.Dtos.Request.Thing;
 using Inventory.Models.Dtos.Response;
 using Inventory.Services.Query.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Inventory.Controllers
 {
@@ -31,30 +28,41 @@ namespace Inventory.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<ThingListDto>>> GetThings()
         {
             return Ok(await _thingQueryService.GetThings());
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ThingDto>> GetThing(int id)
         {
             return Ok(await _thingQueryService.GetThing(id));
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<int>> CreateThing(CreateThingDto createThingDto)
         {
             return StatusCode(201, await _thingCommandService.CreateThing(createThingDto));
         }
 
-        // PUT: api/things/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<int>> Put(int id, UpdateThingDto updateThingDto)
         {
+            await _thingCommandService.UpdateThing(id, updateThingDto);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> Delete(int id)
         {
             await _thingCommandService.DeleteThing(id);
