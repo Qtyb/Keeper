@@ -48,5 +48,14 @@ namespace Inventory.Services.Mappings
                 CategoryId = createThingDto.CategoryId
             };
         }
+
+        public void Map(UpdateThingDto updateThingDto, Thing thing)
+        {
+            thing.Name = string.IsNullOrEmpty(updateThingDto.Name) ? thing.Name : updateThingDto.Name;
+            thing.Description = string.IsNullOrEmpty(updateThingDto.Description) ? thing.Description : updateThingDto.Description;
+            thing.Value = updateThingDto.Value ?? thing.Value;
+            thing.CurrencyId = updateThingDto.CurrencyId ?? thing.CurrencyId;
+            thing.CategoryId = updateThingDto.CategoryId ?? thing.CategoryId;
+        }
     }
 }

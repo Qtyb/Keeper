@@ -10,5 +10,6 @@ namespace Inventory.Services.Mappings.Interfaces
         IEnumerable<ThingListDto> Map(IEnumerable<Thing> thing);
         ThingDto Map(Thing thing);
         Thing Map(CreateThingDto createThingDto);
+        void Map(UpdateThingDto updateThingDto, Thing thing);
     }
 }

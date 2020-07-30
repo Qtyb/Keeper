@@ -42,6 +42,20 @@ namespace Inventory.Services.Query
             return thing.Id;
         }
 
+        public async Task UpdateThing(int id, UpdateThingDto updateThingDto)
+        {
+            _logger.LogInformation("{class}.{method} with id = [{id}] Invoked", nameof(ThingCommandService), nameof(UpdateThing), id);
+
+            var thing = await _thingRepository.GetById(id);
+            if (thing is null || thing.Deleted)
+                throw new EntityNotFoundException<Thing>($"Id = [{id}]");
+
+            _thingMappingService.Map(updateThingDto, thing);
+            await _unitOfWork.Commit();
+
+            _logger.LogInformation("{entityName} with id = [{id}] has been successfully updated", nameof(Thing), thing.Id);
+        }
+
         public async Task DeleteThing(int id)
         {
             _logger.LogInformation("{class}.{method} with id = [{id}] Invoked", nameof(ThingCommandService), nameof(DeleteThing), id);
