@@ -29,6 +29,7 @@ namespace Inventory.Data.Entities
 
         [Required]
         [MaxLength(50)]
+        [EmailAddress]
         public string Email { get; set; }
 
         public DateTimeOffset CreatedOn { get; set; }
