@@ -11,7 +11,10 @@ namespace ApiGateway.WebApi
     {
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors();
             services.AddOcelot();
+            
         }
 
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -20,6 +23,12 @@ namespace ApiGateway.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //TODO only on dev environment
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>
