@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Logging", "src\Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Data", "src\Inventory\Data\Inventory.Data\Inventory.Data.csproj", "{917DD606-FD70-45A5-AA4B-D343D16412EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Web", "src\Inventory\WebApi\Inventory.Web.csproj", "{399DFC8B-1D90-41EA-8F6C-658D2E1328BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.WebApi", "src\Inventory\WebApi\Inventory.WebApi.csproj", "{399DFC8B-1D90-41EA-8F6C-658D2E1328BC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Repositories", "src\Inventory\Repositories\Inventory.Repositories\Inventory.Repositories.csproj", "{881A1AA8-93F1-471F-91D1-5EC91E144C97}"
 EndProject
@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Models", "src\Inv
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{A9A6D43F-12BA-4C4E-A448-4145E73CCFAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.WebApi", "src\ApiGateway\ApiGateway.WebApi\ApiGateway.WebApi.csproj", "{CDEA3FC5-D775-4F28-B230-EE55FCE43C76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway.WebApi", "src\ApiGateway\ApiGateway.WebApi\ApiGateway.WebApi.csproj", "{CDEA3FC5-D775-4F28-B230-EE55FCE43C76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
