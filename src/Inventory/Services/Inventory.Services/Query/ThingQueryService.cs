@@ -29,7 +29,7 @@ namespace Inventory.Services.Query
         public async Task<IEnumerable<ThingListDto>> GetThings()
         {
             _logger.LogInformation("{class}.{method} Invoked", nameof(ThingQueryService), nameof(GetThings));
-            var things = await _thingRepository.GetAll();
+            var things = await _thingRepository.GetWithCategoriesAndCurrencies();
 
             return _thingMappingService.Map(things);
         }

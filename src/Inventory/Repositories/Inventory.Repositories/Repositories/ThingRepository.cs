@@ -14,10 +14,12 @@ namespace Inventory.Repositories.Repositories
         {
         }
 
-        public override async Task<IEnumerable<Thing>> GetAll()
+        public async Task<IEnumerable<Thing>> GetWithCategoriesAndCurrencies()
         {
             return await DbSet
                 .Where(t => t.Deleted == false)
+                .Include(t => t.Currency)
+                .Include(t => t.Category)
                 .ToListAsync();
         }
     }
