@@ -1,0 +1,1 @@
+dotnet watch --project ..\src\Inventory\WebApi\Inventory.WebApi.csproj run

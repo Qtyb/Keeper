@@ -24,6 +24,7 @@ Steps (1-3 only the first time):
  2. [Create database](#Database-migrations)
  3. [Seed database](#Database-seeds)
  4. Run Keeper (DEV)
+    - Using Powershell script: go inside `scripts` and run `.\dev_run.ps1`
     - Using Visual Studio: open `Keeper.sln` and run:
         - `ApiGateway.WebApi`
         - `Inventory.WebApi`
