@@ -6,11 +6,34 @@ This is my bachelor project.
 | Service       | Port          |
 | ------------- |:-------------:|
 | Inventory     | 7000,7001     |
+| ApiGateway    | 7100,7101     |
 | Db            | 1433          |
 | RabbitMq      | 5672          |
 | RabbitMqGui   | 15672         |
 
+## Dependencies
+ - [.Net Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+ - [Docker](https://docs.docker.com/docker-for-windows/install/)
+
 ## How to run
+Steps (1-3 only the first time):
+ 1. To create mssql and rabbitmq servers run inside `docker` directory:
+    ```
+    docker-compose up
+    ```
+ 2. [Create database](#Database-migrations)
+ 3. [Seed database](#Database-seeds)
+ 4. Run Keeper (DEV)
+    - Using Visual Studio: open `Keeper.sln` and run:
+        - `ApiGateway.WebApi`
+        - `Inventory.WebApi`
+    - Using dotnetCLI: head to `src` directory and run `dotnet run`
+        - Inside `ApiGateway\ApiGateway.WebApi`
+        - Inside `Inventory\WebApi`
+
+
+*Proper script based on docker is in development.*
+
 
 ## Docker configuration
 
