@@ -5,12 +5,14 @@ using Inventory.Data;
 using Inventory.Data.Extensions;
 using Inventory.Repositories.Extensions;
 using Inventory.Services.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
 
 namespace Inventory
 {
@@ -25,12 +27,31 @@ namespace Inventory
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
             services.AddDbContext<InventoryContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("InventoryContext")));
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                //Move to appsettings
+                o.Authority = "http://localhost:7200";
+                o.Audience = "resourceapi";
+                o.RequireHttpsMetadata = false;
+            });
+
+            services.AddAuthorization(options =>
+            {
+                //Policies - example of use
+                //For proper implemention this needs to be used inside Authorize annotations
+                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "api.read"));
+                options.AddPolicy("Consumer", policy => policy.RequireClaim(ClaimTypes.Role, "consumer"));
+            });
 
             services.ConfigureInventoryData();
             services.ConfigureCommonRepositories();
@@ -39,7 +60,6 @@ namespace Inventory
             services.ConfigureCommonSwagger(nameof(Inventory), _version);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

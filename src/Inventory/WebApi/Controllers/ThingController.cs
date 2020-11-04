@@ -1,6 +1,7 @@
 ﻿using Inventory.Models.Dtos.Request.Thing;
 using Inventory.Models.Dtos.Response;
 using Inventory.Services.Query.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -35,6 +36,7 @@ namespace Inventory.Controllers
             return Ok(await _thingQueryService.GetThings());
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

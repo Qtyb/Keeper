@@ -1,12 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace ApiGateway.WebApi
+namespace AuthServer
 {
-#pragma warning disable RCS1102 // Make class static.
     public class Program
-#pragma warning restore RCS1102 // Make class static.
     {
         public static void Main(string[] args)
         {
@@ -18,12 +21,6 @@ namespace ApiGateway.WebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-            .ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                config
-                    .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                    .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-            });
+                });
     }
 }
