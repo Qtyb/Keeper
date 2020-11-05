@@ -1,4 +1,0 @@
-2020-11-04 22:55:32.623 +01:00 [INF] Starting IdentityServer4 version 3.0.2.0
-2020-11-04 22:55:32.714 +01:00 [INF] Using the default authentication scheme Identity.Application for IdentityServer
-2020-11-04 22:56:02.767 +01:00 [ERR] Exception removing expired grants: Method not found: 'Microsoft.EntityFrameworkCore.Metadata.Builders.IndexBuilder Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasIndex(System.Linq.Expressions.Expression`1<System.Func`2<!0,System.Object>>)'.
-2020-11-04 22:56:32.777 +01:00 [ERR] Exception removing expired grants: Method not found: 'Microsoft.EntityFrameworkCore.Metadata.Builders.IndexBuilder Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1.HasIndex(System.Linq.Expressions.Expression`1<System.Func`2<!0,System.Object>>)'.

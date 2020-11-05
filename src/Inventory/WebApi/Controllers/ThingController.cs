@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Inventory.Controllers
 {
+    [Authorize]
     [Route("api/things")]
     [ApiController]
     public class ThingController : ControllerBase
@@ -36,7 +38,6 @@ namespace Inventory.Controllers
             return Ok(await _thingQueryService.GetThings());
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
