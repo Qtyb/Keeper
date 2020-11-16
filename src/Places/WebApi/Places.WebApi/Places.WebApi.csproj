@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common.Framework\Common.Framework.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.Logging\Common.Logging.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.Repository\Common.Repository.csproj" />
+    <ProjectReference Include="..\..\Data\Places.Data\Places.Data.csproj" />
+    <ProjectReference Include="..\..\Models\Places.Models\Places.Models.csproj" />
+    <ProjectReference Include="..\..\Repositories\Places.Repositories\Places.Repositories.csproj" />
+    <ProjectReference Include="..\..\Services\Places.Services\Places.Services.csproj" />
+  </ItemGroup>
+
+</Project>

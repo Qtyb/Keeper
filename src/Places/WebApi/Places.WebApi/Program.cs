@@ -2,9 +2,9 @@ using Common.Logging.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Inventory
+namespace Places.WebApi
 {
-    public static class Program
+    public class Program
     {
         public static void Main(string[] args)
         {

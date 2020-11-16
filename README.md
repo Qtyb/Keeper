@@ -8,6 +8,7 @@ This is my bachelor project.
 | Inventory     | 7000,7001     |
 | ApiGateway    | 7100,7101     |
 | AuthSever     | 7200,7201     |
+| Places        | 7300,7301     |
 | Db            | 1433          |
 | RabbitMq      | 5672          |
 | RabbitMqGui   | 15672         |

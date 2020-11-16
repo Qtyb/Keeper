@@ -284,3 +284,4 @@ MigrationBackup/
 .ionide/
 
 
+src/AuthServer/AuthServer/authserver_log.txt
