@@ -5,13 +5,12 @@ using Microsoft.Extensions.Logging;
 using Places.Models.Dtos.Request;
 using Places.Models.Dtos.Response;
 using Places.Services.Query.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Places.WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/places")]
     [ApiController]
     public class PlacesController : ControllerBase
@@ -36,7 +35,6 @@ namespace Places.WebApi.Controllers
         public async Task<ActionResult<IEnumerable<PlaceListDto>>> GetPlaces()
         {
             return Ok(await _placeQueryService.GetPlaces());
-
         }
 
         [HttpGet("{id}")]
