@@ -13,7 +13,7 @@ namespace Common.EventBus.RabbitMq
         private readonly IRabbitMqConnection _rabbitMqConnection;
         private readonly ILogger<RabbitMqPublisherService> _logger;
         private readonly IConfigurationSection _rabbitMqConfig;
-        private readonly string _exchangeName = "distributedTransactions.exchange"; //GET FROM CONFIGURATION
+        private readonly string _exchangeName = "Keeper.Exchange"; //GET FROM CONFIGURATION
         private IModel _channel;
 
         public RabbitMqPublisherService(
@@ -32,7 +32,6 @@ namespace Common.EventBus.RabbitMq
 
             var message = JsonSerializer.Serialize(objectToSend);
 
-            EnsureConnectionToRabbitMq();
             SendRabbitMqMessage(message, routingKey);
         }
 
@@ -40,12 +39,14 @@ namespace Common.EventBus.RabbitMq
         {
             _logger.LogInformation($"{nameof(Publish)} with\n{nameof(routingKey)}: [{routingKey}]\n{nameof(message)}: [{message}]");
 
-            EnsureConnectionToRabbitMq();
             SendRabbitMqMessage(message, routingKey);
         }
 
         private void SendRabbitMqMessage(string message, string routingKey)
         {
+            EnsureConnectionToRabbitMq();
+            EnsureExchangeExists();
+
             var body = Encoding.UTF8.GetBytes(message);
             _channel.BasicPublish(_exchangeName, routingKey, mandatory: false, basicProperties: null, body);
             _logger.LogInformation($"{nameof(Publish)} with\n{nameof(routingKey)}: {routingKey}\n{nameof(message)}: {message} published");
@@ -65,6 +66,11 @@ namespace Common.EventBus.RabbitMq
 
                 //TODO 2: CallbackException handle
             }
+
+        }
+        private void EnsureExchangeExists()
+        {
+            //TODO 2: Implement this method
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using AuthServer.Data.Identity;
 using AuthServer.Extensions;
 using AuthServer.Services;
+using Common.EventBus.Extensions;
 using IdentityServer4.Services;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Net;
+using System.Reflection;
 
 namespace AuthServer
 {
@@ -30,6 +33,8 @@ namespace AuthServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
@@ -59,6 +64,8 @@ namespace AuthServer
             {
                 options.EnableEndpointRouting = false;
             }).SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services.AddEventBus();
         }
 
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)

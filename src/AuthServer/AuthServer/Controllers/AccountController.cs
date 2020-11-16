@@ -1,6 +1,8 @@
 ﻿using AuthServer.Data.Identity;
 using AuthServer.Extensions;
 using AuthServer.Models;
+using AuthServer.Models.Events;
+using Common.EventBus.Interfaces;
 using IdentityServer4.Events;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
@@ -23,14 +25,23 @@ namespace AuthServer.Controllers
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
+        private readonly IEventBusPublisher _eventBusPublisher;
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events)
+        public AccountController(
+            SignInManager<AppUser> signInManager, 
+            UserManager<AppUser> userManager, 
+            IIdentityServerInteractionService interaction, 
+            IAuthenticationSchemeProvider schemeProvider, 
+            IClientStore clientStore, 
+            IEventService events,
+            IEventBusPublisher eventBusPublisher)
         {
             _userManager = userManager;
             _interaction = interaction;
             _schemeProvider = schemeProvider;
             _clientStore = clientStore;
             _events = events;
+            _eventBusPublisher = eventBusPublisher;
             _signInManager = signInManager;
         }
 
@@ -154,18 +165,19 @@ namespace AuthServer.Controllers
         [Route("api/[controller]")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestViewModel model)
         {
-            //var aVal = 0; var blowUp = 1 / aVal;
-
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var user = new AppUser { UserName = model.Email, Name = model.Name, Email = model.Email };
-
             var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
 
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            //FIX GUID
+            var @event = new UserCreated { Name = model.Name, Email = model.Email, Guid = Guid.NewGuid()};
+            _eventBusPublisher.Publish(@event, nameof(UserCreated));
+
+            
 
             //claims are not used for the moment
             //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));
