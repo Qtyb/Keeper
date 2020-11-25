@@ -17,7 +17,9 @@ namespace Inventory.Services.Mappings.Interfaces
         void Map(UpdatePlaceDto updatePlaceDto, Place thing);
 
         PlaceCreatedEvent MapToPlaceCreatedEvent(Place place);
+
         PlaceUpdatedEvent MapToPlaceUpdatedEvent(Place place);
+
         PlaceDeletedEvent MapToPlaceDeletedEvent(Place place);
     }
 }

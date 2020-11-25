@@ -1,3 +1,4 @@
+using Common.EventBus.Extensions;
 using Common.Framework.Extensions;
 using Common.Logging.Extensions;
 using Common.Repository.Extensions;
@@ -5,6 +6,7 @@ using Inventory.Data;
 using Inventory.Data.Extensions;
 using Inventory.Repositories.Extensions;
 using Inventory.Services.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 using System.Security.Claims;
 
 namespace Inventory
@@ -32,6 +35,8 @@ namespace Inventory
             services.AddControllers();
             services.AddDbContext<InventoryContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("InventoryContext")));
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddAuthentication(options =>
             {
@@ -58,6 +63,8 @@ namespace Inventory
             services.ConfigureInventoryRepositories();
             services.ConfigureInventoryServices();
             services.ConfigureCommonSwagger(nameof(Inventory), _version);
+
+            services.AddEventBus();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

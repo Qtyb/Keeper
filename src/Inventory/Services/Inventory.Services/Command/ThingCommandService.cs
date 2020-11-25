@@ -1,4 +1,5 @@
 ﻿using Common.Data.Exceptions;
+using Common.EventBus.Interfaces;
 using Common.Repository.Interfaces;
 using Inventory.Data.Entities;
 using Inventory.Models.Dtos.Request.Thing;
@@ -14,17 +15,20 @@ namespace Inventory.Services.Query
     {
         private readonly IThingRepository _thingRepository;
         private readonly IThingMappingService _thingMappingService;
+        private readonly IEventBusPublisher _eventBusPublisher;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ThingQueryService> _logger;
 
         public ThingCommandService(
             IThingRepository thingRepository,
             IThingMappingService thingMappingService,
+            IEventBusPublisher eventBusPublisher,
             IUnitOfWork unitOfWork,
             ILogger<ThingQueryService> logger)
         {
             _thingRepository = thingRepository;
             _thingMappingService = thingMappingService;
+            _eventBusPublisher = eventBusPublisher;
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
@@ -36,9 +40,12 @@ namespace Inventory.Services.Query
 
             _thingRepository.Add(thing);
             await _unitOfWork.Commit();
+            _logger.LogInformation("{entityName} with id = [{id}] has been created in local database", nameof(Thing), thing.Id);
+
+            var @event = _thingMappingService.MapToThingCreatedEvent(thing);
+            _eventBusPublisher.Publish(@event);
 
             _logger.LogInformation("{entityName} with id = [{id}] has been successfully created", nameof(Thing), thing.Id);
-
             return thing.Id;
         }
 
@@ -52,6 +59,10 @@ namespace Inventory.Services.Query
 
             _thingMappingService.Map(updateThingDto, thing);
             await _unitOfWork.Commit();
+            _logger.LogInformation("{entityName} with id = [{id}] has been updated in local database", nameof(Thing), thing.Id);
+
+            var @event = _thingMappingService.MapToThingUpdatedEvent(thing);
+            _eventBusPublisher.Publish(@event);
 
             _logger.LogInformation("{entityName} with id = [{id}] has been successfully updated", nameof(Thing), thing.Id);
         }
@@ -66,6 +77,10 @@ namespace Inventory.Services.Query
 
             thing.Deleted = true;
             await _unitOfWork.Commit();
+            _logger.LogInformation("{entityName} with id = [{id}] has been deleted in local database", nameof(Thing), thing.Id);
+
+            var @event = _thingMappingService.MapToThingDeletedEvent(thing);
+            _eventBusPublisher.Publish(@event);
 
             _logger.LogInformation("{entityName} with id = [{id}] has been successfully deleted", nameof(Thing), thing.Id);
         }
