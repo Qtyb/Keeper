@@ -173,11 +173,8 @@ namespace AuthServer.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            //FIX GUID
-            var @event = new UserCreated { Name = model.Name, Email = model.Email, Guid = Guid.NewGuid()};
+            var @event = new UserCreated { Name = model.Name, Email = model.Email, Id = user.Id};
             _eventBusPublisher.Publish(@event, nameof(UserCreated));
-
-            
 
             //claims are not used for the moment
             //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));
