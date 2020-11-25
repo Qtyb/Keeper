@@ -173,8 +173,8 @@ namespace AuthServer.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            var @event = new UserCreated { Name = model.Name, Email = model.Email, Id = user.Id};
-            _eventBusPublisher.Publish(@event, nameof(UserCreated));
+            var @event = new UserCreatedEvent { Name = model.Name, Email = model.Email, Id = user.Id};
+            _eventBusPublisher.Publish(@event);
 
             //claims are not used for the moment
             //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));

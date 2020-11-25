@@ -26,17 +26,27 @@ namespace Common.EventBus.RabbitMq
             _rabbitMqConfig = configuration.GetSection("RabbitMq");
         }
 
+        public void Publish<T>(T objectToSend)
+        {
+            var routingKey = typeof(T).Name.Replace("Event", "");
+
+            Publish(objectToSend, routingKey);
+        }
+
         public void Publish<T>(T objectToSend, string routingKey)
         {
+            routingKey = routingKey.Replace("Event", "");
+
             _logger.LogInformation($"{nameof(Publish)} with\n{nameof(routingKey)}: [{routingKey}]\ntype: [{typeof(T).Name}]");
 
             var message = JsonSerializer.Serialize(objectToSend);
-
             SendRabbitMqMessage(message, routingKey);
         }
 
         public void Publish(string message, string routingKey)
         {
+            routingKey = routingKey.Replace("Event", "");
+
             _logger.LogInformation($"{nameof(Publish)} with\n{nameof(routingKey)}: [{routingKey}]\n{nameof(message)}: [{message}]");
 
             SendRabbitMqMessage(message, routingKey);
@@ -72,5 +82,7 @@ namespace Common.EventBus.RabbitMq
         {
             //TODO 2: Implement this method
         }
+
+
     }
 }
