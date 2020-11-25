@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.6" />
     <PackageReference Include="Scrutor" Version="3.2.1" />
@@ -12,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Common.Data\Common.Data.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.EventBus.Interfaces\Common.EventBus.Interfaces.csproj" />
     <ProjectReference Include="..\..\Data\Places.Data\Places.Data.csproj" />
     <ProjectReference Include="..\..\Models\Places.Models\Places.Models.csproj" />
     <ProjectReference Include="..\..\Repositories\Places.Repositories\Places.Repositories.csproj" />

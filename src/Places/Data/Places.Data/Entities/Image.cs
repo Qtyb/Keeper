@@ -11,7 +11,7 @@ namespace Places.Data.Entities
         public Image()
         {
             Things = new HashSet<Thing>();
-            ThingPlaces = new HashSet<ThingPlaces>();
+            ThingPlaces = new HashSet<ThingPlace>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -34,7 +34,7 @@ namespace Places.Data.Entities
         public DateTimeOffset? UpdatedOn { get; set; }
 
         public ICollection<Thing> Things { get; set; }
-        public ICollection<ThingPlaces> ThingPlaces { get; set; }
+        public ICollection<ThingPlace> ThingPlaces { get; set; }
 
     }
 }

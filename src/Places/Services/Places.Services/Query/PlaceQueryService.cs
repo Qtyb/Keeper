@@ -42,7 +42,7 @@ namespace Places.Services.Query
             if (place is null || place.Deleted)
                 throw new EntityNotFoundException<Place>($"Id = [{id}]");
 
-            return _placeMappingService.Map(place);
+            return _placeMappingService.MapToPlaceDto(place);
         }
     }
 }

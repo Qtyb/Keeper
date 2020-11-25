@@ -10,15 +10,15 @@ namespace Places.Data
         }
 
         public DbSet<Image> Images { get; set; }
-        public DbSet<Place> Locations { get; set; }
+        public DbSet<Place> Places { get; set; }
         public DbSet<Thing> Things { get; set; }
-        public DbSet<ThingPlaces> ThingLocations { get; set; }
+        public DbSet<ThingPlace> ThingPlaces { get; set; }
         public DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            ThingPlaces.OnModelCreating(modelBuilder);
+            ThingPlace.OnModelCreating(modelBuilder);
         }
     }
 }

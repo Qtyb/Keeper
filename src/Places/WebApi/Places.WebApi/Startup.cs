@@ -1,6 +1,8 @@
+using Common.EventBus.Extensions;
 using Common.Framework.Extensions;
 using Common.Logging.Extensions;
 using Common.Repository.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +14,7 @@ using Places.Data;
 using Places.Data.Extensions;
 using Places.Repositories.Extensions;
 using Places.Services.Extensions;
+using System.Reflection;
 using System.Security.Claims;
 
 namespace Places.WebApi
@@ -33,6 +36,8 @@ namespace Places.WebApi
             services.AddControllers();
             services.AddDbContext<PlacesContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("PlacesContext")));
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddAuthentication(options =>
             {
@@ -59,6 +64,8 @@ namespace Places.WebApi
             services.ConfigurePlacesRepositories();
             services.ConfigurePlacesServices();
             services.ConfigureCommonSwagger(nameof(Places), _version);
+            
+            services.AddEventBus();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

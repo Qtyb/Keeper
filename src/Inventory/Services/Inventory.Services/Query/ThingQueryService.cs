@@ -42,7 +42,7 @@ namespace Inventory.Services.Query
             if (thing is null || thing.Deleted)
                 throw new EntityNotFoundException<Thing>($"Id = [{id}]");
 
-            return _thingMappingService.Map(thing);
+            return _thingMappingService.MapToThingDto(thing);
         }
     }
 }

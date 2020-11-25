@@ -1,17 +1,16 @@
 ﻿using Inventory.Data.Entities;
 using Inventory.Models.Dtos.Request.Thing;
 using Inventory.Models.Dtos.Response;
+using Inventory.Models.Events.Things;
 using Inventory.Services.Mappings.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Inventory.Services.Mappings
 {
     public class ThingMappingService : IThingMappingService
     {
-        public ThingDto Map(Thing thing)
+        public ThingDto MapToThingDto(Thing thing)
         {
             return new ThingDto()
             {
@@ -56,6 +55,34 @@ namespace Inventory.Services.Mappings
             thing.Value = updateThingDto.Value ?? thing.Value;
             thing.CurrencyId = updateThingDto.CurrencyId ?? thing.CurrencyId;
             thing.CategoryId = updateThingDto.CategoryId ?? thing.CategoryId;
+        }
+
+        public ThingCreatedEvent MapToThingCreatedEvent(Thing thing)
+        {
+            return new ThingCreatedEvent
+            {
+                Guid = thing.Guid,
+                Name = thing.Name,
+                Value = thing.Value,
+            };
+        }
+
+        public ThingUpdatedEvent MapToThingUpdatedEvent(Thing thing)
+        {
+            return new ThingUpdatedEvent
+            {
+                Guid = thing.Guid,
+                Name = thing.Name,
+                Value = thing.Value
+            };
+        }
+
+        public ThingDeletedEvent MapToThingDeletedEvent(Thing plathingce)
+        {
+            return new ThingDeletedEvent
+            {
+                Guid = plathingce.Guid
+            };
         }
     }
 }

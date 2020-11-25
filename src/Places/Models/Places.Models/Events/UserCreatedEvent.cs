@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AuthServer.Models.Events
+namespace Places.Models.Events
 {
-    public class UserCreated
+    public class UserCreatedEvent
     {
         public string Name { get; set; }
         public string Email { get; set; }

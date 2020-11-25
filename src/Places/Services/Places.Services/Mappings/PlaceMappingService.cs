@@ -2,6 +2,7 @@
 using Places.Data.Entities;
 using Places.Models.Dtos.Request;
 using Places.Models.Dtos.Response;
+using Places.Models.Events.Places;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace Inventory.Services.Mappings
 {
     public class PlaceMappingService : IPlaceMappingService
     {
-        public PlaceDto Map(Place place)
+        public PlaceDto MapToPlaceDto(Place place)
         {
             return new PlaceDto
             {
@@ -47,6 +48,34 @@ namespace Inventory.Services.Mappings
             place.Name = string.IsNullOrEmpty(updatePlaceDto.Name) ? place.Name : updatePlaceDto.Name;
             place.Description = string.IsNullOrEmpty(updatePlaceDto.Description) ? place.Description : updatePlaceDto.Description;
             place.ParentPlaceId = updatePlaceDto.ParentPlaceId;
+        }
+
+        public PlaceCreatedEvent MapToPlaceCreatedEvent(Place place)
+        {
+            return new PlaceCreatedEvent
+            {
+                Guid = place.Guid,
+                Name = place.Name,
+                ParentPlaceGuid = place.ParentPlace?.Guid
+            };
+        }
+
+        public PlaceUpdatedEvent MapToPlaceUpdatedEvent(Place place)
+        {
+            return new PlaceUpdatedEvent
+            {
+                Guid = place.Guid,
+                Name = place.Name,
+                ParentPlaceGuid = place.ParentPlace.Guid
+            };
+        }
+
+        public PlaceDeletedEvent MapToPlaceDeletedEvent(Place place)
+        {
+            return new PlaceDeletedEvent
+            {
+                Guid = place.Guid
+            };
         }
     }
 }
