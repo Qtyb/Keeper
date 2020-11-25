@@ -10,7 +10,7 @@ namespace Places.Data.Entities
     {
         public Thing()
         {
-            ThingPlaces = new HashSet<ThingPlaces>();
+            ThingPlaces = new HashSet<ThingPlace>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -41,6 +41,6 @@ namespace Places.Data.Entities
         public int? UserId { get; set; }
         public User User { get; set; }
 
-        public ICollection<ThingPlaces> ThingPlaces { get; set; }
+        public ICollection<ThingPlace> ThingPlaces { get; set; }
     }
 }

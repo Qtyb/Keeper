@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Places.Data.Entities
 {
-    public class ThingPlaces : IGuidEntity, IDateTimeEntity
+    public class ThingPlace : IGuidEntity, IDateTimeEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -40,13 +40,13 @@ namespace Places.Data.Entities
 
         internal static void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<ThingPlaces>()
+            builder.Entity<ThingPlace>()
                 .HasOne(tl => tl.Thing)
                 .WithMany(t => t.ThingPlaces)
                 .HasForeignKey(tl => tl.ThingId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<ThingPlaces>()
+            builder.Entity<ThingPlace>()
                 .HasOne(tl => tl.Place)
                 .WithMany(t => t.ThingPlaces)
                 .HasForeignKey(tl => tl.PlaceId)
