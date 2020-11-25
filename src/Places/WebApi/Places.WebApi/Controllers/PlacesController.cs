@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Places.WebApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/places")]
     [ApiController]
     public class PlacesController : ControllerBase

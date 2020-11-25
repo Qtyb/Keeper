@@ -1,4 +1,5 @@
 ﻿using Common.Data.Exceptions;
+using Common.EventBus.Interfaces;
 using Common.Repository.Interfaces;
 using Inventory.Repositories.Repositories.Intefaces;
 using Inventory.Services.Mappings.Interfaces;
@@ -14,17 +15,20 @@ namespace Places.Services.Query
     {
         private readonly IPlaceRepository _placeRepository;
         private readonly IPlaceMappingService _placeMappingService;
+        private readonly IEventBusPublisher _eventBusPublisher;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<PlaceQueryService> _logger;
 
         public PlaceCommandService(
             IPlaceRepository placeRepository,
             IPlaceMappingService placeMappingService,
+            IEventBusPublisher eventBusPublisher,
             IUnitOfWork unitOfWork,
             ILogger<PlaceQueryService> logger)
         {
             _placeRepository = placeRepository;
             _placeMappingService = placeMappingService;
+            _eventBusPublisher = eventBusPublisher;
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
@@ -36,6 +40,10 @@ namespace Places.Services.Query
 
             _placeRepository.Add(place);
             await _unitOfWork.Commit();
+            _logger.LogInformation("{entityName} with id = [{id}] has been created in local database", nameof(Place), place.Id);
+
+            var @event = _placeMappingService.MapToPlaceCreatedEvent(place);
+            _eventBusPublisher.Publish(@event);
 
             _logger.LogInformation("{entityName} with id = [{id}] has been successfully created", nameof(Place), place.Id);
 
@@ -52,6 +60,10 @@ namespace Places.Services.Query
 
             _placeMappingService.Map(updatePlaceDto, place);
             await _unitOfWork.Commit();
+            _logger.LogInformation("{entityName} with id = [{id}] has been updated in local database", nameof(Place), place.Id);
+
+            var @event = _placeMappingService.MapToPlaceUpdatedEvent(place);
+            _eventBusPublisher.Publish(@event);
 
             _logger.LogInformation("{entityName} with id = [{id}] has been successfully updated", nameof(Place), place.Id);
         }
@@ -66,6 +78,10 @@ namespace Places.Services.Query
 
             place.Deleted = true;
             await _unitOfWork.Commit();
+            _logger.LogInformation("{entityName} with id = [{id}] has been deleted from local database", nameof(Place), place.Id);
+
+            var @event = _placeMappingService.MapToPlaceDeletedEvent(place);
+            _eventBusPublisher.Publish(@event);
 
             _logger.LogInformation("{entityName} with id = [{id}] has been successfully deleted", nameof(Place), place.Id);
         }
