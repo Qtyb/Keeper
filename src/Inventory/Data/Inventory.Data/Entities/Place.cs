@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Inventory.Data.Entities
 {
-    public class Location : IGuidEntity, IDateTimeEntity
+    public class Place : IGuidEntity, IDateTimeEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -33,11 +33,11 @@ namespace Inventory.Data.Entities
         public DateTimeOffset? UpdatedOn { get; set; }
 
         public int? ParentLocationId { get; set; }
-        public Location ParentLocation { get; set; }
+        public Place ParentLocation { get; set; }
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public User User { get; set; }
 
-        public ICollection<ThingLocation> ThingLocations { get; set; }
+        public ICollection<ThingPlace> ThingPlaces { get; set; }
     }
 }

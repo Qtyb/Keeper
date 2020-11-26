@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Inventory.Data.Entities
 {
-    public class ThingLocation : IGuidEntity, IDateTimeEntity
+    public class ThingPlace : IGuidEntity, IDateTimeEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -34,24 +34,24 @@ namespace Inventory.Data.Entities
         public int ThingId { get; set; }
         public Thing Thing { get; set; }
 
-        public int LocationId { get; set; }
-        public Location Location { get; set; }
+        public int PlaceId { get; set; }
+        public Place Place { get; set; }
 
         public int? ImageId { get; set; }
         public Image Image { get; set; }
 
         internal static void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<ThingLocation>()
+            builder.Entity<ThingPlace>()
                 .HasOne(tl => tl.Thing)
-                .WithMany(t => t.ThingLocations)
+                .WithMany(t => t.ThingPlaces)
                 .HasForeignKey(tl => tl.ThingId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<ThingLocation>()
-                .HasOne(tl => tl.Location)
-                .WithMany(t => t.ThingLocations)
-                .HasForeignKey(tl => tl.LocationId)
+            builder.Entity<ThingPlace>()
+                .HasOne(tl => tl.Place)
+                .WithMany(t => t.ThingPlaces)
+                .HasForeignKey(tl => tl.PlaceId)
                 .OnDelete(DeleteBehavior.NoAction);
 
         }

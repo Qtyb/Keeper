@@ -2,10 +2,9 @@
 {
     public interface IEventBusSubscriber
     {
-        void Subscribe<T>()
-            where T : class;
+        void SetupSubscriber();
 
-        void BindQueue<T>()
+        void Subscribe<T>()
             where T : class;
     }
 }

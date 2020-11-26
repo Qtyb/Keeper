@@ -10,7 +10,7 @@ namespace Inventory.Data.Entities
     {
         public Thing()
         {
-            ThingLocations = new HashSet<ThingLocation>();
+            ThingPlaces = new HashSet<ThingPlace>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -47,6 +47,6 @@ namespace Inventory.Data.Entities
         public int? UserId { get; set; }
         public User User { get; set; }
 
-        public ICollection<ThingLocation> ThingLocations { get; set; }
+        public ICollection<ThingPlace> ThingPlaces { get; set; }
     }
 }

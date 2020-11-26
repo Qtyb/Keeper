@@ -1,9 +1,11 @@
 using Common.EventBus.Extensions;
+using Common.EventBus.Interfaces;
 using Common.Framework.Extensions;
 using Common.Logging.Extensions;
 using Common.Repository.Extensions;
 using Inventory.Data;
 using Inventory.Data.Extensions;
+using Inventory.Models.Events.Places;
 using Inventory.Repositories.Extensions;
 using Inventory.Services.Extensions;
 using MediatR;
@@ -14,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Security.Claims;
 
@@ -94,6 +97,16 @@ namespace Inventory
             });
 
             app.UseCommonSwagger(nameof(Inventory), _version);
+            SetupEventBus(app);
+        }
+
+        private static void SetupEventBus(IApplicationBuilder app)
+        {
+            var subsriberService = app.ApplicationServices.GetRequiredService<IEventBusSubscriber>();
+            subsriberService.SetupSubscriber();
+            subsriberService.Subscribe<PlaceCreatedEvent>();
+            subsriberService.Subscribe<PlaceUpdatedEvent>();
+            subsriberService.Subscribe<PlaceDeletedEvent>();
         }
     }
 }

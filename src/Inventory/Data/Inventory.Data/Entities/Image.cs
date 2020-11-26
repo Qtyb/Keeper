@@ -11,7 +11,7 @@ namespace Inventory.Data.Entities
         public Image()
         {
             Things = new HashSet<Thing>();
-            ThingLocations = new HashSet<ThingLocation>();
+            ThingLocations = new HashSet<ThingPlace>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -34,7 +34,7 @@ namespace Inventory.Data.Entities
         public DateTimeOffset? UpdatedOn { get; set; }
 
         public ICollection<Thing> Things { get; set; }
-        public ICollection<ThingLocation> ThingLocations { get; set; }
+        public ICollection<ThingPlace> ThingLocations { get; set; }
 
     }
 }

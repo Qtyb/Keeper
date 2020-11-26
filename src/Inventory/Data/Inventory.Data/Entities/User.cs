@@ -12,7 +12,7 @@ namespace Inventory.Data.Entities
         public User()
         {
             Things = new HashSet<Thing>();
-            Locations = new HashSet<Location>();
+            Locations = new HashSet<Place>();
         }
 
 
@@ -37,7 +37,7 @@ namespace Inventory.Data.Entities
         public DateTimeOffset? UpdatedOn { get; set; }
 
         public ICollection<Thing> Things { get; set; }
-        public ICollection<Location> Locations { get; set; }
+        public ICollection<Place> Locations { get; set; }
 
 
     }

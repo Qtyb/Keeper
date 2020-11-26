@@ -1,7 +1,9 @@
 ﻿using Common.EventBus.Interfaces;
 using Common.EventBus.RabbitMq.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -18,38 +20,44 @@ namespace Common.EventBus.RabbitMq
         private readonly Dictionary<string, Type> _events = new Dictionary<string, Type>();
 
         private readonly IRabbitMqConnection _rabbitMqConnection;
-        private readonly IMediator _mediator;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ILogger<RabbitMqSubscriberService> _logger;
         private readonly string _queueName;
-        private readonly string _exchangeName;
+        private readonly string _exchangeName = "Keeper.Exchange";
         private IModel _channel;
 
         public RabbitMqSubscriberService(
             IRabbitMqConnection rabbitMqConnection,
             IConfiguration configuration,
-            IMediator mediator,
+            IServiceScopeFactory serviceScopeFactory,
             ILogger<RabbitMqSubscriberService> logger)
         {
             _rabbitMqConnection = rabbitMqConnection;
-            _mediator = mediator;
+            _serviceScopeFactory = serviceScopeFactory;
             _logger = logger;
 
             var rabbitMqSettings = configuration.GetSection("RabbitMq");
             _queueName = rabbitMqSettings["Queue"];
-            _exchangeName = rabbitMqSettings["Exchange"];
         }
 
-        public void Subscribe<T>()
-            where T : class
+        public void SetupSubscriber()
         {
             EnsureConnectionToRabbitMq();
 
             CreateExchange(_exchangeName);
             CreateQueue(_queueName);
 
-            _logger.LogInformation($"Subscribing for topic [{typeof(T).Name}]");
-            BindQueue<T>();
             InitializeConsumer();
+        }
+
+        public void Subscribe<T>()
+            where T : class
+        {
+            _logger.LogInformation($"Subscribing for topic [{typeof(T).Name}]");
+
+            _events.Add(typeof(T).Name, typeof(T));
+            _channel.QueueBind(_queueName, _exchangeName, typeof(T).Name);
+
             _logger.LogInformation($"Subscribed for topic [{typeof(T).Name}]");
         }
 
@@ -63,9 +71,22 @@ namespace Common.EventBus.RabbitMq
                 var body = Encoding.UTF8.GetString(@event.Body.ToArray());
                 var message = JsonSerializer.Deserialize(body, eventType);
 
-                await _mediator.Send(message);
+                using (var scope = _serviceScopeFactory.CreateScope())
+                {
+                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                    await mediator.Send(message);
+                }
+
                 _channel.BasicAck(@event.DeliveryTag, false);
             }
+            catch(DbUpdateException ex)
+            {
+                var message = Encoding.UTF8.GetString(@event.Body.ToArray());
+                _logger.LogError(ex, $"Database exception happened. Message: {message}");
+
+                _channel.BasicNack(@event.DeliveryTag, false, false);
+            }
+
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while retrieving message from queue.");
@@ -125,12 +146,6 @@ namespace Common.EventBus.RabbitMq
             _channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
         }
 
-        //TODO
-        public void BindQueue<T>()
-            where T : class
-        {
-            _events.Add(typeof(T).Name, typeof(T));
-            _channel.QueueBind(_queueName, _exchangeName, typeof(T).Name);
-        }
+
     }
 }

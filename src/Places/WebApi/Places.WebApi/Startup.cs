@@ -1,4 +1,5 @@
 using Common.EventBus.Extensions;
+using Common.EventBus.Interfaces;
 using Common.Framework.Extensions;
 using Common.Logging.Extensions;
 using Common.Repository.Extensions;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Places.Data;
 using Places.Data.Extensions;
+using Places.Models.Events.Things;
 using Places.Repositories.Extensions;
 using Places.Services.Extensions;
 using System.Reflection;
@@ -95,6 +97,16 @@ namespace Places.WebApi
             });
 
             app.UseCommonSwagger(_appName, _version);
+            SetupEventBus(app);
+        }
+
+        private static void SetupEventBus(IApplicationBuilder app)
+        {
+            var subsriberService = app.ApplicationServices.GetRequiredService<IEventBusSubscriber>();
+            subsriberService.SetupSubscriber();
+            subsriberService.Subscribe<ThingCreatedEvent>();
+            subsriberService.Subscribe<ThingUpdatedEvent>();
+            subsriberService.Subscribe<ThingDeletedEvent>();
         }
     }
 }
