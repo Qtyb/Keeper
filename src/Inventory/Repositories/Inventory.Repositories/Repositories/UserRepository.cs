@@ -7,18 +7,17 @@ using System.Threading.Tasks;
 
 namespace Inventory.Repositories.Repositories
 {
-    public class PlaceRepository : Repository<Place>, IPlaceRepository
+    public class UserRepository : Repository<User>, IUserRepository
     {
-        public PlaceRepository(DbContext dbContext) : base(dbContext)
+        public UserRepository(DbContext dbContext) : base(dbContext)
         {
         }
 
-        public async Task<Place> GetByGuid(Guid guid)
+        public async Task<User> GetByGuid(Guid guid)
         {
             return await DbSet
                 .FirstOrDefaultAsync(p =>
-                    p.Guid == guid &&
-                    p.Deleted == false);
+                    p.Guid == guid);
         }
     }
 }

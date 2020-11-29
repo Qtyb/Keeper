@@ -8,5 +8,7 @@ namespace Places.Services.Mappings.Interfaces
         Thing Map(ThingCreatedEvent @event);
 
         void Map(ThingUpdatedEvent @event, Thing thing);
+
+        ThingCreatedEvent Map(ThingUpdatedEvent @event);
     }
 }

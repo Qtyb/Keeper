@@ -21,5 +21,15 @@ namespace Places.Services.Mappings
             thing.Name = @event.Name;
             thing.Value = @event.Value;
         }
+
+        public ThingCreatedEvent Map(ThingUpdatedEvent @event)
+        {
+            return new ThingCreatedEvent
+            {
+                Guid = @event.Guid,
+                Name = @event.Name,
+                Value = @event.Value
+            };
+        }
     }
 }

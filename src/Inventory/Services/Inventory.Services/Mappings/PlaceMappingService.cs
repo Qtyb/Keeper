@@ -19,5 +19,15 @@ namespace Inventory.Services.Mappings
         {
             place.Name = @event.Name;
         }
+
+        public PlaceCreatedEvent Map(PlaceUpdatedEvent @event)
+        {
+            return new PlaceCreatedEvent
+            {
+                Guid = @event.Guid,
+                Name = @event.Name,
+                ParentPlaceGuid = @event.ParentPlaceGuid
+            };
+        }
     }
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MediatR;
 
-namespace Places.Models.Events
+namespace Places.Models.Events.Users
 {
-    public class UserCreatedEvent
+    public class UserCreatedEvent : IRequest<Unit>
     {
         public string Name { get; set; }
         public string Email { get; set; }

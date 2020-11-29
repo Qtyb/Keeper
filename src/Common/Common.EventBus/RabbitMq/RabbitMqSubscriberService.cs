@@ -1,7 +1,6 @@
 ﻿using Common.EventBus.Interfaces;
 using Common.EventBus.RabbitMq.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -79,18 +78,12 @@ namespace Common.EventBus.RabbitMq
 
                 _channel.BasicAck(@event.DeliveryTag, false);
             }
-            catch(DbUpdateException ex)
-            {
-                var message = Encoding.UTF8.GetString(@event.Body.ToArray());
-                _logger.LogError(ex, $"Database exception happened. Message: {message}");
-
-                _channel.BasicNack(@event.DeliveryTag, false, false);
-            }
-
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while retrieving message from queue.");
-                _channel.BasicNack(@event.DeliveryTag, false, true);
+                var message = Encoding.UTF8.GetString(@event.Body.ToArray());
+                _logger.LogError(ex, $"Error while retrieving message from queue. Message: {message}");
+
+                _channel.BasicNack(@event.DeliveryTag, false, false);
             }
             finally
             {

@@ -8,5 +8,7 @@ namespace Inventory.Services.Mappings.Interfaces
         Place Map(PlaceCreatedEvent @event);
 
         void Map(PlaceUpdatedEvent @event, Place place);
+
+        PlaceCreatedEvent Map(PlaceUpdatedEvent @event);
     }
 }
