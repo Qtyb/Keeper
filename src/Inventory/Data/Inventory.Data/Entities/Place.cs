@@ -28,6 +28,9 @@ namespace Inventory.Data.Entities
         [MaxLength(20)]
         public string City { get; set; }
 
+        [Required]
+        public bool Deleted { get; set; }
+
         public DateTimeOffset CreatedOn { get; set; }
 
         public DateTimeOffset? UpdatedOn { get; set; }
