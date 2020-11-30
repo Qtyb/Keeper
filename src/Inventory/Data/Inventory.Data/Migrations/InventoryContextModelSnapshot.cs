@@ -134,7 +134,6 @@ namespace Inventory.Data.Migrations
                         .HasMaxLength(500);
 
                     b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -286,7 +285,6 @@ namespace Inventory.Data.Migrations
                         .HasMaxLength(50);
 
                     b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")

@@ -6,6 +6,7 @@ using Common.Repository.Extensions;
 using Inventory.Data;
 using Inventory.Data.Extensions;
 using Inventory.Models.Events.Places;
+using Inventory.Models.Events.Users;
 using Inventory.Repositories.Extensions;
 using Inventory.Services.Extensions;
 using MediatR;
@@ -107,6 +108,7 @@ namespace Inventory
             subsriberService.Subscribe<PlaceCreatedEvent>();
             subsriberService.Subscribe<PlaceUpdatedEvent>();
             subsriberService.Subscribe<PlaceDeletedEvent>();
+            subsriberService.Subscribe<UserCreatedEvent>();
         }
     }
 }

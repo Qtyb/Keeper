@@ -12,7 +12,6 @@ namespace Inventory.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Guid { get; set; }
 
         [Required]

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Places.Data;
 
 namespace Places.Data.Migrations
 {
     [DbContext(typeof(PlacesContext))]
-    partial class PlacesContextModelSnapshot : ModelSnapshot
+    [Migration("20201130151737_Remove_Guid_Autogeneration")]
+    partial class Remove_Guid_Autogeneration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

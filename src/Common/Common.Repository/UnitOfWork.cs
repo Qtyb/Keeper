@@ -46,7 +46,8 @@ namespace Common.Repository
         {
             foreach (var entityEntry in entityEntries)
             {
-                if (entityEntry.Entity is IGuidEntity guidEntity)
+                if (entityEntry.Entity is IGuidEntity guidEntity &&
+                    guidEntity.Guid == default)
                 {
                     guidEntity.Guid = Guid.NewGuid();
                 }

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Places.Data;
 using Places.Data.Extensions;
 using Places.Models.Events.Things;
+using Places.Models.Events.Users;
 using Places.Repositories.Extensions;
 using Places.Services.Extensions;
 using System.Reflection;
@@ -66,7 +67,7 @@ namespace Places.WebApi
             services.ConfigurePlacesRepositories();
             services.ConfigurePlacesServices();
             services.ConfigureCommonSwagger(nameof(Places), _version);
-            
+
             services.AddEventBus();
         }
 
@@ -107,6 +108,7 @@ namespace Places.WebApi
             subsriberService.Subscribe<ThingCreatedEvent>();
             subsriberService.Subscribe<ThingUpdatedEvent>();
             subsriberService.Subscribe<ThingDeletedEvent>();
+            subsriberService.Subscribe<UserCreatedEvent>();
         }
     }
 }
