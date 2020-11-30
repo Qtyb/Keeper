@@ -24,7 +24,6 @@ namespace ApiGateway.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            //TODO only on dev environment
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
