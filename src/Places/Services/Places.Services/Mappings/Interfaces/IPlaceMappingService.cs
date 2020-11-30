@@ -13,7 +13,7 @@ namespace Inventory.Services.Mappings.Interfaces
 
         PlaceDto MapToPlaceDto(Place thing);
 
-        Place Map(CreatePlaceDto createPlaceDto, int userId);
+        Place Map(CreatePlaceDto createPlaceDto, User user);
 
         void Map(UpdatePlaceDto updatePlaceDto, Place thing);
 

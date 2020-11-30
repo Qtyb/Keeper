@@ -7,6 +7,7 @@ namespace Places.Models.Events.Places
     public class PlaceCreatedEvent
     {
         public Guid Guid { get; set; }
+        public Guid UserGuid { get; set; }
         public string Name { get; set; }
         public Guid? ParentPlaceGuid { get; set; }
     }

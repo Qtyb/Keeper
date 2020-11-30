@@ -47,7 +47,7 @@ namespace Places.Services.Query
 
             var userGuid = _httpContextUserService.GetUserGuid();
             var user = await _userRepository.GetByGuid(userGuid);
-            var place = _placeMappingService.Map(createPlaceDto, user.Id);
+            var place = _placeMappingService.Map(createPlaceDto, user);
 
             _placeRepository.Add(place);
             await _unitOfWork.Commit();

@@ -34,14 +34,15 @@ namespace Inventory.Services.Mappings
             }).ToList();
         }
 
-        public Place Map(CreatePlaceDto createPlaceDto, int userId)
+        public Place Map(CreatePlaceDto createPlaceDto, User user)
         {
             return new Place()
             {
                 Name = createPlaceDto.Name,
                 Description = createPlaceDto.Description,
                 ParentPlaceId = createPlaceDto.ParentPlaceId,
-                UserId = userId
+                User = user,
+                UserId = user.Id
             };
         }
 
@@ -57,6 +58,7 @@ namespace Inventory.Services.Mappings
             return new PlaceCreatedEvent
             {
                 Guid = place.Guid,
+                UserGuid = place.User.Guid,
                 Name = place.Name,
                 ParentPlaceGuid = place.ParentPlace?.Guid
             };

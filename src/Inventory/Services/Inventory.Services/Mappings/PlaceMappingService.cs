@@ -6,12 +6,13 @@ namespace Inventory.Services.Mappings
 {
     public class PlaceMappingService : IPlaceMappingService
     {
-        public Place Map(PlaceCreatedEvent @event)
+        public Place Map(PlaceCreatedEvent @event, int userId)
         {
             return new Place
             {
                 Guid = @event.Guid,
-                Name = @event.Name
+                Name = @event.Name,
+                UserId = userId
             };
         }
 

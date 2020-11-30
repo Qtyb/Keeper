@@ -8,6 +8,7 @@ namespace Inventory.Models.Events.Places
     public class PlaceCreatedEvent : IRequest<Unit>
     {
         public Guid Guid { get; set; }
+        public Guid UserGuid { get; set; }
         public string Name { get; set; }
         public Guid? ParentPlaceGuid { get; set; }
     }
