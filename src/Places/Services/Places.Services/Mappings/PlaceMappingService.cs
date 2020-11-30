@@ -68,7 +68,7 @@ namespace Inventory.Services.Mappings
             {
                 Guid = place.Guid,
                 Name = place.Name,
-                ParentPlaceGuid = place.ParentPlace.Guid
+                ParentPlaceGuid = place.ParentPlace?.Guid
             };
         }
 

@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\..\Common\Common.Framework\Common.Framework.csproj" />
     <ProjectReference Include="..\..\..\Common\Common.Logging\Common.Logging.csproj" />
     <ProjectReference Include="..\..\..\Common\Common.Repository\Common.Repository.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.Service\Common.Service.csproj" />
     <ProjectReference Include="..\..\Data\Places.Data\Places.Data.csproj" />
     <ProjectReference Include="..\..\Models\Places.Models\Places.Models.csproj" />
     <ProjectReference Include="..\..\Repositories\Places.Repositories\Places.Repositories.csproj" />

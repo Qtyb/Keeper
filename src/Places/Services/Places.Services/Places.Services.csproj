@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Common.Data\Common.Data.csproj" />
     <ProjectReference Include="..\..\..\Common\Common.EventBus.Interfaces\Common.EventBus.Interfaces.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.Service\Common.Service.csproj" />
     <ProjectReference Include="..\..\Data\Places.Data\Places.Data.csproj" />
     <ProjectReference Include="..\..\Models\Places.Models\Places.Models.csproj" />
     <ProjectReference Include="..\..\Repositories\Places.Repositories\Places.Repositories.csproj" />

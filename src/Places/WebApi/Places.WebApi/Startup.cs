@@ -43,13 +43,15 @@ namespace Places.WebApi
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
+            services.AddHttpContextAccessor();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
             {
-                //Move to appsettings
+                //TODO Move to appsettings
                 o.Authority = "http://localhost:7200";
                 o.Audience = "resourceapi";
                 o.RequireHttpsMetadata = false;
