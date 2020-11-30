@@ -5,11 +5,8 @@ EXPOSE 7001
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-#COPY ["WebApi/Inventory.WebApi.csproj", ""]
 COPY ./Inventory ./Inventory
 COPY ./Common ./Common
-RUN ls ./Inventory
-RUN ls ./Common
 RUN dotnet restore "Inventory/WebApi/Inventory.WebApi.csproj"
 WORKDIR "/src/."
 RUN dotnet build "Inventory/WebApi/Inventory.WebApi.csproj" -c Release -o /app/build
