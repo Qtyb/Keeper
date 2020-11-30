@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\Common\Common.EventBus\Common.EventBus.csproj" />
     <ProjectReference Include="..\..\Common\Common.Framework\Common.Framework.csproj" />
     <ProjectReference Include="..\..\Common\Common.Logging\Common.Logging.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Service\Common.Service.csproj" />
     <ProjectReference Include="..\Data\Inventory.Data\Inventory.Data.csproj" />
     <ProjectReference Include="..\Models\Inventory.Models\Inventory.Models.csproj" />
     <ProjectReference Include="..\Services\Inventory.Services\Inventory.Services.csproj" />

@@ -1,11 +1,13 @@
 ﻿using Common.Data.Exceptions;
 using Common.EventBus.Interfaces;
 using Common.Repository.Interfaces;
+using Common.Service.Interfaces;
 using Inventory.Repositories.Repositories.Intefaces;
 using Inventory.Services.Mappings.Interfaces;
 using Microsoft.Extensions.Logging;
 using Places.Data.Entities;
 using Places.Models.Dtos.Request;
+using Places.Repositories.Repositories.Intefaces;
 using Places.Services.Query.Interfaces;
 using System.Threading.Tasks;
 
@@ -15,6 +17,8 @@ namespace Places.Services.Query
     {
         private readonly IPlaceRepository _placeRepository;
         private readonly IPlaceMappingService _placeMappingService;
+        private readonly IUserRepository _userRepository;
+        private readonly IHttpContextUserService _httpContextUserService;
         private readonly IEventBusPublisher _eventBusPublisher;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<PlaceQueryService> _logger;
@@ -22,12 +26,16 @@ namespace Places.Services.Query
         public PlaceCommandService(
             IPlaceRepository placeRepository,
             IPlaceMappingService placeMappingService,
+            IUserRepository userRepository,
+            IHttpContextUserService httpContextUserService,
             IEventBusPublisher eventBusPublisher,
             IUnitOfWork unitOfWork,
             ILogger<PlaceQueryService> logger)
         {
             _placeRepository = placeRepository;
             _placeMappingService = placeMappingService;
+            _userRepository = userRepository;
+            _httpContextUserService = httpContextUserService;
             _eventBusPublisher = eventBusPublisher;
             _unitOfWork = unitOfWork;
             _logger = logger;
@@ -36,7 +44,10 @@ namespace Places.Services.Query
         public async Task<int> CreatePlace(CreatePlaceDto createPlaceDto)
         {
             _logger.LogInformation("{class}.{method} with dto = [{@dto}] Invoked", nameof(PlaceCommandService), nameof(CreatePlace), createPlaceDto);
-            var place = _placeMappingService.Map(createPlaceDto);
+
+            var userGuid = _httpContextUserService.GetUserGuid();
+            var user = await _userRepository.GetByGuid(userGuid);
+            var place = _placeMappingService.Map(createPlaceDto, user.Id);
 
             _placeRepository.Add(place);
             await _unitOfWork.Commit();
@@ -54,9 +65,10 @@ namespace Places.Services.Query
         {
             _logger.LogInformation("{class}.{method} with id = [{id}] Invoked", nameof(PlaceCommandService), nameof(UpdatePlace), id);
 
-            var place = await _placeRepository.GetById(id);
+            var userGuid = _httpContextUserService.GetUserGuid();
+            var place = await _placeRepository.GetById(id, userGuid);
             if (place is null || place.Deleted)
-                throw new EntityNotFoundException<Place>($"Id = [{id}]");
+                throw new EntityNotFoundException<Place>($"Id = [{id}], UserGuid = [{userGuid}]");
 
             _placeMappingService.Map(updatePlaceDto, place);
             await _unitOfWork.Commit();
@@ -72,9 +84,10 @@ namespace Places.Services.Query
         {
             _logger.LogInformation("{class}.{method} with id = [{id}] Invoked", nameof(PlaceCommandService), nameof(DeletePlace), id);
 
-            var place = await _placeRepository.GetById(id);
+            var userGuid = _httpContextUserService.GetUserGuid();
+            var place = await _placeRepository.GetById(id, userGuid);
             if (place is null || place.Deleted)
-                throw new EntityNotFoundException<Place>($"Id = [{id}]");
+                throw new EntityNotFoundException<Place>($"Id = [{id}], UserGuid = [{userGuid}]");
 
             place.Deleted = true;
             await _unitOfWork.Commit();

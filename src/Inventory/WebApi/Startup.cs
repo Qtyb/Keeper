@@ -3,6 +3,7 @@ using Common.EventBus.Interfaces;
 using Common.Framework.Extensions;
 using Common.Logging.Extensions;
 using Common.Repository.Extensions;
+using Common.Service.Extensions;
 using Inventory.Data;
 using Inventory.Data.Extensions;
 using Inventory.Models.Events.Places;
@@ -17,7 +18,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Security.Claims;
 
@@ -42,6 +42,7 @@ namespace Inventory
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
+            services.AddHttpContextAccessor();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -65,6 +66,7 @@ namespace Inventory
             services.ConfigureInventoryData();
             services.ConfigureCommonRepositories();
             services.ConfigureInventoryRepositories();
+            services.ConfigureCommonServices();
             services.ConfigureInventoryServices();
             services.ConfigureCommonSwagger(nameof(Inventory), _version);
 

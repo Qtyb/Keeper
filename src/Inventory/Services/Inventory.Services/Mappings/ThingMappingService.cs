@@ -36,7 +36,7 @@ namespace Inventory.Services.Mappings
             }).ToList();
         }
 
-        public Thing Map(CreateThingDto createThingDto)
+        public Thing Map(CreateThingDto createThingDto, int userId)
         {
             return new Thing()
             {
@@ -44,7 +44,8 @@ namespace Inventory.Services.Mappings
                 Description = createThingDto.Description,
                 Value = createThingDto.Value,
                 CurrencyId = createThingDto.CurrencyId,
-                CategoryId = createThingDto.CategoryId
+                CategoryId = createThingDto.CategoryId,
+                UserId = userId
             };
         }
 

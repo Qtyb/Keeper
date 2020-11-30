@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
 
 namespace Inventory.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/things")]
     [ApiController]
     public class ThingController : ControllerBase

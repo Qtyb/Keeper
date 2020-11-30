@@ -3,6 +3,7 @@ using Common.EventBus.Interfaces;
 using Common.Framework.Extensions;
 using Common.Logging.Extensions;
 using Common.Repository.Extensions;
+using Common.Service.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -65,6 +66,7 @@ namespace Places.WebApi
             services.ConfigurePlacesData();
             services.ConfigureCommonRepositories();
             services.ConfigurePlacesRepositories();
+            services.ConfigureCommonServices();
             services.ConfigurePlacesServices();
             services.ConfigureCommonSwagger(nameof(Places), _version);
 

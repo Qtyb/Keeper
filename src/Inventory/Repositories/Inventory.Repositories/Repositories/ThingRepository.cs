@@ -2,6 +2,7 @@
 using Inventory.Data.Entities;
 using Inventory.Repositories.Repositories.Intefaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,10 +15,20 @@ namespace Inventory.Repositories.Repositories
         {
         }
 
-        public async Task<IEnumerable<Thing>> GetWithCategoriesAndCurrencies()
+        public async Task<Thing> GetById(int id, Guid userGuid)
         {
             return await DbSet
-                .Where(t => t.Deleted == false)
+                .FirstOrDefaultAsync(t =>
+                    t.Id == id &&
+                    t.User.Guid == userGuid);
+        }
+
+        public async Task<IEnumerable<Thing>> GetWithCategoriesAndCurrencies(Guid userGuid)
+        {
+            return await DbSet
+                .Where(t => 
+                    t.Deleted == false &&
+                    t.User.Guid == userGuid)
                 .Include(t => t.Currency)
                 .Include(t => t.Category)
                 .ToListAsync();

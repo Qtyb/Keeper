@@ -2,6 +2,7 @@
 using Places.Models.Dtos.Request;
 using Places.Models.Dtos.Response;
 using Places.Models.Events.Places;
+using System;
 using System.Collections.Generic;
 
 namespace Inventory.Services.Mappings.Interfaces
@@ -12,7 +13,7 @@ namespace Inventory.Services.Mappings.Interfaces
 
         PlaceDto MapToPlaceDto(Place thing);
 
-        Place Map(CreatePlaceDto createPlaceDto);
+        Place Map(CreatePlaceDto createPlaceDto, int userId);
 
         void Map(UpdatePlaceDto updatePlaceDto, Place thing);
 

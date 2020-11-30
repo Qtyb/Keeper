@@ -12,7 +12,7 @@ namespace Inventory.Services.Mappings.Interfaces
 
         ThingDto MapToThingDto(Thing thing);
 
-        Thing Map(CreateThingDto createThingDto);
+        Thing Map(CreateThingDto createThingDto, int userId);
 
         void Map(UpdateThingDto updateThingDto, Thing thing);
 

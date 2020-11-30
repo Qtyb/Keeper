@@ -3,6 +3,7 @@ using Places.Data.Entities;
 using Places.Models.Dtos.Request;
 using Places.Models.Dtos.Response;
 using Places.Models.Events.Places;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,13 +34,14 @@ namespace Inventory.Services.Mappings
             }).ToList();
         }
 
-        public Place Map(CreatePlaceDto createPlaceDto)
+        public Place Map(CreatePlaceDto createPlaceDto, int userId)
         {
             return new Place()
             {
                 Name = createPlaceDto.Name,
                 Description = createPlaceDto.Description,
                 ParentPlaceId = createPlaceDto.ParentPlaceId,
+                UserId = userId
             };
         }
 

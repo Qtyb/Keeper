@@ -1,4 +1,5 @@
 ﻿using Common.Data.Exceptions;
+using Common.Service.Interfaces;
 using Inventory.Repositories.Repositories.Intefaces;
 using Inventory.Services.Mappings.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -14,22 +15,27 @@ namespace Places.Services.Query
     {
         private readonly IPlaceRepository _placeRepository;
         private readonly IPlaceMappingService _placeMappingService;
+        private readonly IHttpContextUserService _httpContextUserService;
         private readonly ILogger<PlaceQueryService> _logger;
 
         public PlaceQueryService(
             IPlaceRepository thingRepository,
             IPlaceMappingService thingMappingService,
+            IHttpContextUserService httpContextUserService,
             ILogger<PlaceQueryService> logger)
         {
             _placeRepository = thingRepository;
             _placeMappingService = thingMappingService;
+            _httpContextUserService = httpContextUserService;
             _logger = logger;
         }
 
         public async Task<IEnumerable<PlaceListDto>> GetPlaces()
         {
             _logger.LogInformation("{class}.{method} Invoked", nameof(PlaceQueryService), nameof(GetPlaces));
-            var places = await _placeRepository.GetPlaces();
+
+            var userGuid = _httpContextUserService.GetUserGuid();
+            var places = await _placeRepository.GetPlaces(userGuid);
 
             return _placeMappingService.Map(places);
         }
@@ -37,10 +43,12 @@ namespace Places.Services.Query
         public async Task<PlaceDto> GetPlace(int id)
         {
             _logger.LogInformation("{class}.{method} with id = [{id}] Invoked", nameof(PlaceQueryService), nameof(GetPlaces), id);
-            var place = await _placeRepository.GetPlaceWithParent(id);
+
+            var userGuid = _httpContextUserService.GetUserGuid();
+            var place = await _placeRepository.GetPlaceWithParent(id, userGuid);
 
             if (place is null || place.Deleted)
-                throw new EntityNotFoundException<Place>($"Id = [{id}]");
+                throw new EntityNotFoundException<Place>($"Id = [{id}], UserGuid = [{userGuid}]");
 
             return _placeMappingService.MapToPlaceDto(place);
         }
