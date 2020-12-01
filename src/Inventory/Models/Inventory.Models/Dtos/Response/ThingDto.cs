@@ -6,7 +6,10 @@ namespace Inventory.Models.Dtos.Response
     {
         public int Id { get; set; }
 
+        public int? PlaceId { get; set; }
+
         public string Name { get; set; }
+        public string PlaceName { get; set; }
 
         public string Description { get; set; }
 

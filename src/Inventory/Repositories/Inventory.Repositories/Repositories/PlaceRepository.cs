@@ -3,6 +3,8 @@ using Inventory.Data.Entities;
 using Inventory.Repositories.Repositories.Intefaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Inventory.Repositories.Repositories
@@ -19,6 +21,14 @@ namespace Inventory.Repositories.Repositories
                 .FirstOrDefaultAsync(p =>
                     p.Guid == guid &&
                     p.Deleted == false);
+        }
+
+        public async Task<IEnumerable<Place>> GetPlaces(Guid userGuid)
+        {
+            return await DbSet
+                .Where(p =>
+                    p.Deleted == false)
+                .ToListAsync();
         }
     }
 }

@@ -13,6 +13,8 @@ namespace Inventory.Models.Dtos.Request.Thing
 
         public decimal? Value { get; set; }
 
+        public int? PlaceId { get; set; }
+
         public int? CurrencyId { get; set; }
 
         public int? CategoryId { get; set; }

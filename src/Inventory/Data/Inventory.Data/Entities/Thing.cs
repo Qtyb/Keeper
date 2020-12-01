@@ -35,6 +35,9 @@ namespace Inventory.Data.Entities
 
         public DateTimeOffset? UpdatedOn { get; set; }
 
+        public int? PlaceId { get; set; }
+        public Place Place { get; set; }
+
         public int? CurrencyId { get; set; }
         public Currency Currency { get; set; }
 

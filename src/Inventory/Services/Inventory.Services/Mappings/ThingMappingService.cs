@@ -15,6 +15,7 @@ namespace Inventory.Services.Mappings
             return new ThingDto()
             {
                 Id = thing.Id,
+                PlaceId = thing.PlaceId,
                 Name = thing.Name,
                 Description = thing.Description,
                 Value = thing.Value,
@@ -30,6 +31,7 @@ namespace Inventory.Services.Mappings
             {
                 Id = thingElement.Id,
                 Name = thingElement.Name,
+                PlaceName = thingElement.Place?.Name,
                 Value = thingElement.Value,
                 CurrencyCode = thingElement.Currency?.Code,
                 CategoryName = thingElement.Category?.Name
@@ -45,7 +47,8 @@ namespace Inventory.Services.Mappings
                 Value = createThingDto.Value,
                 CurrencyId = createThingDto.CurrencyId,
                 CategoryId = createThingDto.CategoryId,
-                UserId = userId
+                UserId = userId,
+                PlaceId = createThingDto.PlaceId
             };
         }
 
@@ -56,6 +59,7 @@ namespace Inventory.Services.Mappings
             thing.Value = updateThingDto.Value ?? thing.Value;
             thing.CurrencyId = updateThingDto.CurrencyId ?? thing.CurrencyId;
             thing.CategoryId = updateThingDto.CategoryId ?? thing.CategoryId;
+            thing.PlaceId = updateThingDto.PlaceId ?? thing.PlaceId;
         }
 
         public ThingCreatedEvent MapToThingCreatedEvent(Thing thing)

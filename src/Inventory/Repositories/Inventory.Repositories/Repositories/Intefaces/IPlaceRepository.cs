@@ -10,5 +10,6 @@ namespace Inventory.Repositories.Repositories.Intefaces
     public interface IPlaceRepository : IRepository<Place>
     {
         Task<Place> GetByGuid(Guid guid);
+        Task<IEnumerable<Place>> GetPlaces(Guid userGuid);
     }
 }

@@ -23,7 +23,7 @@ namespace Inventory.Repositories.Repositories
                     t.User.Guid == userGuid);
         }
 
-        public async Task<IEnumerable<Thing>> GetWithCategoriesAndCurrencies(Guid userGuid)
+        public async Task<IEnumerable<Thing>> GetWithCategoriesAndCurrenciesAndPlaces(Guid userGuid)
         {
             return await DbSet
                 .Where(t => 
@@ -31,6 +31,7 @@ namespace Inventory.Repositories.Repositories
                     t.User.Guid == userGuid)
                 .Include(t => t.Currency)
                 .Include(t => t.Category)
+                .Include(t => t.Place)
                 .ToListAsync();
         }
     }

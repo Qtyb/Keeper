@@ -37,7 +37,7 @@ namespace Inventory.Services.Query
             _logger.LogInformation("{class}.{method} Invoked", nameof(ThingQueryService), nameof(GetThings));
 
             var userGuid = _httpContextUserService.GetUserGuid();
-            var things = await _thingRepository.GetWithCategoriesAndCurrencies(userGuid);
+            var things = await _thingRepository.GetWithCategoriesAndCurrenciesAndPlaces(userGuid);
 
             return _thingMappingService.Map(things);
         }

@@ -41,5 +41,7 @@ namespace Inventory.Data.Entities
         public User User { get; set; }
 
         public ICollection<ThingPlace> ThingPlaces { get; set; }
+        public ICollection<Thing> Things { get; set; }
+
     }
 }

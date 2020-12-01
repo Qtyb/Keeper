@@ -9,7 +9,7 @@ namespace Inventory.Repositories.Repositories.Intefaces
 {
     public interface IThingRepository : IRepository<Thing>
     {
-        Task<IEnumerable<Thing>> GetWithCategoriesAndCurrencies(Guid userGuid);
+        Task<IEnumerable<Thing>> GetWithCategoriesAndCurrenciesAndPlaces(Guid userGuid);
         Task<Thing> GetById(int id, Guid userGuid);
     }
 }
