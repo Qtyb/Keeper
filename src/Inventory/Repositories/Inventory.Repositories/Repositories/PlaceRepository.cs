@@ -27,7 +27,8 @@ namespace Inventory.Repositories.Repositories
         {
             return await DbSet
                 .Where(p =>
-                    p.Deleted == false)
+                    p.Deleted == false &&
+                    p.User.Guid == userGuid)
                 .ToListAsync();
         }
     }
