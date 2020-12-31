@@ -50,7 +50,6 @@ namespace Common.EventBus.RabbitMq
         private void SendRabbitMqMessage(string message, string routingKey)
         {
             EnsureConnectionToRabbitMq();
-            EnsureExchangeExists();
 
             var body = Encoding.UTF8.GetBytes(message);
             _channel.BasicPublish(_exchangeName, routingKey, mandatory: false, basicProperties: null, body);
@@ -68,16 +67,8 @@ namespace Common.EventBus.RabbitMq
                 _channel = null;
 
                 _channel = _rabbitMqConnection.GetConnection().CreateModel();
-
-                //TODO 2: CallbackException handle
             }
 
         }
-        private void EnsureExchangeExists()
-        {
-            //TODO 2: Implement this method
-        }
-
-
     }
 }

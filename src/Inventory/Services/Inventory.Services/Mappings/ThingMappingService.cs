@@ -19,8 +19,6 @@ namespace Inventory.Services.Mappings
                 Name = thing.Name,
                 Description = thing.Description,
                 Value = thing.Value,
-                CurrencyCode = thing.Currency?.Code,
-                CategoryName = thing.Category?.Name,
                 LastUpdatedOn = thing.UpdatedOn ?? thing.CreatedOn
             };
         }
@@ -32,9 +30,7 @@ namespace Inventory.Services.Mappings
                 Id = thingElement.Id,
                 Name = thingElement.Name,
                 PlaceName = thingElement.Place?.Name,
-                Value = thingElement.Value,
-                CurrencyCode = thingElement.Currency?.Code,
-                CategoryName = thingElement.Category?.Name
+                Value = thingElement.Value
             }).ToList();
         }
 

@@ -1,4 +1,4 @@
-﻿using AuthServer.Data.Identity;
+﻿using AuthServer.Data.Entities;
 using AuthServer.Extensions;
 using AuthServer.Services;
 using Common.EventBus.Extensions;

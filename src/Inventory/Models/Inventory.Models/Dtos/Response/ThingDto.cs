@@ -15,10 +15,6 @@ namespace Inventory.Models.Dtos.Response
 
         public decimal? Value { get; set; }
 
-        public string CurrencyCode { get; set; }
-
-        public string CategoryName { get; set; }
-
         public DateTimeOffset LastUpdatedOn { get; set; }
     }
 }

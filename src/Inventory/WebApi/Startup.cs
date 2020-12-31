@@ -77,11 +77,11 @@ namespace Inventory
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
+                app.UseCommonExceptionHandler();
             }
             else
             {
-                app.UseCommonExceptionHandler();
             }
 
             //app.UseHttpsRedirection();

@@ -13,6 +13,10 @@ namespace Inventory.Repositories.Repositories
         {
         }
 
+        public async Task<User> FindUserByEmail(string email)
+        {
+            return await DbSet.FirstOrDefaultAsync(t => t.Email == email);
+        }
         public async Task<User> GetByGuid(Guid guid)
         {
             return await DbSet

@@ -19,7 +19,6 @@ using Places.Models.Events.Users;
 using Places.Repositories.Extensions;
 using Places.Services.Extensions;
 using System.Reflection;
-using System.Security.Claims;
 
 namespace Places.WebApi
 {
@@ -51,19 +50,12 @@ namespace Places.WebApi
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
             {
-                //TODO Move to appsettings
                 o.Authority = "http://localhost:7200";
                 o.Audience = "resourceapi";
                 o.RequireHttpsMetadata = false;
             });
 
-            services.AddAuthorization(options =>
-            {
-                //Policies - example of use
-                //For proper implemention this needs to be used inside Authorize annotations
-                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "api.read"));
-                options.AddPolicy("Consumer", policy => policy.RequireClaim(ClaimTypes.Role, "consumer"));
-            });
+            services.AddAuthorization();
 
             services.ConfigurePlacesData();
             services.ConfigureCommonRepositories();
@@ -85,8 +77,6 @@ namespace Places.WebApi
             {
                 app.UseCommonExceptionHandler();
             }
-
-            //app.UseHttpsRedirection();
 
             app.UseCommonRequestLogging();
 

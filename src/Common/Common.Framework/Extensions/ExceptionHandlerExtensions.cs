@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using System.IO;
 
 namespace Common.Framework.Extensions
 {
@@ -18,14 +17,7 @@ namespace Common.Framework.Extensions
 
                     var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
 
-                    if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
-                    {
-                        await context.Response.WriteAsync("File error");
-                    }
-                    else
-                    {
-                        await context.Response.WriteAsync("Unknown error");
-                    }
+                    await context.Response.WriteAsync("Unknown error");
                 });
             });
         }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Inventory.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/things")]
     [ApiController]
     public class ThingController : ControllerBase

@@ -85,10 +85,6 @@ namespace Common.EventBus.RabbitMq
 
                 _channel.BasicNack(@event.DeliveryTag, false, false);
             }
-            finally
-            {
-                //EnsureConnectionToRabbitMq();
-            }
         }
 
         private void EnsureConnectionToRabbitMq()
@@ -111,13 +107,11 @@ namespace Common.EventBus.RabbitMq
 
         private void OnModelShutdown(object sender, ShutdownEventArgs e)
         {
-            //TODO 2: finish
             _logger.LogError($"RabbitMq channel shutdown \nReply: [{e.ReplyText}]\nCause: [{e.Cause}]\nToString(): [{e}]");
         }
 
         private void OnChannelCallbackException(object sender, CallbackExceptionEventArgs e)
         {
-            //TODO 2: finish
             _logger.LogError($"RabbitMq channel callback exception occured.\nException: [{e.Exception}]\nDetails: [{e.Detail}]\nToString(): [{e}]");
         }
 

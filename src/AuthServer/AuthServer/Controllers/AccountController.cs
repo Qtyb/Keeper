@@ -1,4 +1,4 @@
-﻿using AuthServer.Data.Identity;
+﻿using AuthServer.Data.Entities;
 using AuthServer.Extensions;
 using AuthServer.Models;
 using AuthServer.Models.Events;
@@ -28,11 +28,11 @@ namespace AuthServer.Controllers
         private readonly IEventBusPublisher _eventBusPublisher;
 
         public AccountController(
-            SignInManager<AppUser> signInManager, 
-            UserManager<AppUser> userManager, 
-            IIdentityServerInteractionService interaction, 
-            IAuthenticationSchemeProvider schemeProvider, 
-            IClientStore clientStore, 
+            SignInManager<AppUser> signInManager,
+            UserManager<AppUser> userManager,
+            IIdentityServerInteractionService interaction,
+            IAuthenticationSchemeProvider schemeProvider,
+            IClientStore clientStore,
             IEventService events,
             IEventBusPublisher eventBusPublisher)
         {
@@ -106,14 +106,10 @@ namespace AuthServer.Controllers
                 {
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.Name));
 
-                    AuthenticationProperties props = null;
-                    if (AccountOptions.AllowRememberLogin && model.RememberLogin)
+                    var props = new AuthenticationProperties
                     {
-                        props = new AuthenticationProperties
-                        {
-                            IsPersistent = true,
-                            ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
-                        };
+                        IsPersistent = true,
+                        ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
                     };
 
                     // issue authentication cookie with subject ID and username
@@ -168,7 +164,7 @@ namespace AuthServer.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            var @event = new UserCreatedEvent { Name = model.Name, Email = model.Email, Id = user.Id};
+            var @event = new UserCreatedEvent { Name = model.Name, Email = model.Email, Id = user.Id };
             _eventBusPublisher.Publish(@event);
 
             //claims are not used for the moment

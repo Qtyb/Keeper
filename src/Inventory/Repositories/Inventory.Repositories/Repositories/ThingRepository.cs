@@ -15,6 +15,7 @@ namespace Inventory.Repositories.Repositories
         {
         }
 
+
         public async Task<Thing> GetById(int id, Guid userGuid)
         {
             return await DbSet
